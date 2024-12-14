@@ -4,20 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogo da Forca</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
     <h1>Jogo da Forca</h1>
-    <p id="palavra"></p>
-    <p id="tentativas">Tentativas restantes: <span id="num-tentativas">6</span></p>
-    <div id="letras-usadas"></div>
-    <input type="text" id="letra" maxlength="1" placeholder="Digite uma letra" />
-    <button id="chutar">Chutar letra</button>
-    <br><br>
-    <input type="text" id="palavra-completa" placeholder="Tente adivinhar a palavra" />
-    <button id="chutar-palavra">Chutar palavra</button>
-    <p id="mensagem"></p>
-
+    <div id="palavra"></div>
+    <div id="tentativas">Tentativas restantes: 6</div>
+    <div>
+        <label for="letra">Digite uma letra:</label>
+        <input type="text" id="letra" maxlength="1">
+        <button onclick="verificarLetra()">Tentar</button>
+    </div>
+    <div id="mensagem"></div>
     <script src="script.js"></script>
 </body>
 </html>
