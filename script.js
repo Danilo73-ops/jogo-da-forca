@@ -91,6 +91,6 @@ document.getElementById("chutar").addEventListener("click", () => {
 document.getElementById("chutar-palavra").addEventListener("click", () => {
     chutarPalavra();
 });
-
+jacaré
 // Inicializa o jogo
 escolherPalavra();
