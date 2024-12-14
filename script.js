@@ -36,7 +36,7 @@ document.getElementById("tentativas").innerHTML = `Tentativas restantes: ${tenta
 
 // Função para verificar se a letra do usuário está correta
 function verificarLetra() {
-    const letra = document.getElementById("letra").value.toUpperCase();
+    const letra = document.getElementById("letra").value.toUpperCase(); // Converte para maiúscula
     if (letra && letra.length === 1) {
         let acerto = false;
         for (let i = 0; i < palavraEscolhida.length; i++) {
@@ -63,5 +63,21 @@ function verificarLetra() {
 
         // Limpa o campo de input
         document.getElementById("letra").value = "";
+    }
+}
+
+// Função para tentar adivinhar a palavra completa
+function tentarChutarPalavra() {
+    const chute = document.getElementById("palavraChutada").value.toUpperCase(); // Converte para maiúscula
+    if (chute === palavraEscolhida) {
+        document.getElementById("mensagem").innerHTML = "Você acertou a palavra! Parabéns!";
+        letrasCorretas = palavraEscolhida.split("");  // Revela a palavra inteira
+        document.getElementById("palavra").innerHTML = letrasCorretas.join(" ");
+    } else {
+        tentativas--;
+        document.getElementById("tentativas").innerHTML = `Tentativas restantes: ${tentativas}`;
+        if (tentativas === 0) {
+            document.getElementById("mensagem").innerHTML = `Você perdeu! A palavra era ${palavraEscolhida}`;
+        }
     }
 }
