@@ -1,53 +1,59 @@
+/* Definir a cor de fundo do jogo */
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 50px;
     background-color: #f4f4f4;
-    padding: 20px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
+/* Estilo para o título */
 h1 {
     color: #333;
+    margin-top: 20px;
 }
 
+/* Estilo para o campo de palavra */
 #palavra {
-    font-size: 24px;
+    font-size: 2rem;
     font-weight: bold;
+    margin-top: 20px;
 }
 
+/* Estilo para a parte de tentativas restantes */
 #tentativas {
-    font-size: 18px;
-}
-
-#letras-usadas {
-    margin-top: 20px;
-    font-size: 18px;
-}
-
-input {
-    margin-top: 20px;
-    font-size: 18px;
-    padding: 10px;
-    width: 40px;
-    text-align: center;
-}
-
-button {
-    margin-left: 10px;
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-#mensagem {
-    margin-top: 20px;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 1.5rem;
+    margin-top: 10px;
     color: red;
 }
 
-#palavra-completa {
+/* Estilo para o campo de input de letras */
+input[type="text"] {
+    font-size: 1.2rem;
+    padding: 10px;
+    margin: 10px;
+    width: 50px;
+    text-align: center;
+}
+
+/* Estilo para os botões */
+button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Estilo para a área de mensagem */
+#mensagem {
+    font-size: 1.5rem;
     margin-top: 20px;
-    font-size: 18px;
-    width: 200px;
+    font-weight: bold;
 }
