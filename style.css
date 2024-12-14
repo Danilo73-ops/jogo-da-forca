@@ -45,3 +45,9 @@ button {
     font-weight: bold;
     color: red;
 }
+
+#palavra-completa {
+    margin-top: 20px;
+    font-size: 18px;
+    width: 200px;
+}
