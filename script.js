@@ -39,7 +39,7 @@ function tentarLetra(letra) {
 
     if (palavraEscolhida.includes(letra)) {
         for (let i = 0; i < palavraEscolhida.length; i++) {
-            if (palavraEscolhida[i] === letra) {
+            if (palavraEscolhida[i].toUpperCase() === letra) { // Corrigido para verificar com maiúsculas
                 palavraAtual[i] = letra;
             }
         }
