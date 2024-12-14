@@ -1,0 +1,47 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+#palavra {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#tentativas {
+    font-size: 18px;
+}
+
+#letras-usadas {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+input {
+    margin-top: 20px;
+    font-size: 18px;
+    padding: 10px;
+    width: 40px;
+    text-align: center;
+}
+
+button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#mensagem {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+}
