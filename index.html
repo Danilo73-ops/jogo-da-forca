@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +7,37 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Jogo da Forca</h1>
-    <p>Palavra a adivinhar: <span id="palavra"></span></p>
-    <p>Tentativas restantes: <span id="tentativas">6</span></p>
-    <input type="text" id="inputLetra" maxlength="1" placeholder="Digite uma letra" />
-    <button onclick="tentarLetra()">Tentar</button>
-    <button onclick="chutarPalavra()">Chutar a palavra</button>
-    <p id="mensagem"></p>
-    <script src="script.js"></script>
-</body>
-</html>
+    <div class="jogo">
+        <h1>Jogo da Forca</h1>
+        <div id="palavra"></div> <!-- Aqui será exibida a palavra oculta -->
+        <div id="tentativas"></div> <!-- Exibe as tentativas restantes -->
+        <div id="letrasUsadas"></div> <!-- Exibe as letras usadas -->
+
+        <div id="teclado">
+            <!-- Teclado de letras -->
+            <button onclick="jogar('A')">A</button>
+            <button onclick="jogar('B')">B</button>
+            <button onclick="jogar('C')">C</button>
+            <button onclick="jogar('D')">D</button>
+            <button onclick="jogar('E')">E</button>
+            <button onclick="jogar('F')">F</button>
+            <button onclick="jogar('G')">G</button>
+            <button onclick="jogar('H')">H</button>
+            <button onclick="jogar('I')">I</button>
+            <button onclick="jogar('J')">J</button>
+            <button onclick="jogar('K')">K</button>
+            <button onclick="jogar('L')">L</button>
+            <button onclick="jogar('M')">M</button>
+            <button onclick="jogar('N')">N</button>
+            <button onclick="jogar('O')">O</button>
+            <button onclick="jogar('P')">P</button>
+            <button onclick="jogar('Q')">Q</button>
+            <button onclick="jogar('R')">R</button>
+            <button onclick="jogar('S')">S</button>
+            <button onclick="jogar('T')">T</button>
+            <button onclick="jogar('U')">U</button>
+            <button onclick="jogar('V')">V</button>
+            <button onclick="jogar('W')">W</button>
+            <button onclick="jogar('X')">X</button>
+            <button onclick="jogar('Y')">Y</but
+                                            
