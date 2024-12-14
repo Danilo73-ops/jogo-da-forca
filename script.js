@@ -1,72 +1,96 @@
-let palavras = ["MELANCIA", "BANANA", "LARANJA", "MANGA"];
-let palavraEscolhida = "";
-let palavraDisplay = [];
-let tentativasRestantes = 6;
-let letrasErradas = [];
+// Lista de palavras
+const palavras = ["HTML", "JAVASCRIPT", "GITHUB", "REACT", "NODE", "CSS", "PYTHON"];
+let palavraEscolhida;
+let letrasUsadas = [];
 let letrasCorretas = [];
+let tentativas = 6;
 
-function iniciarJogo() {
-    palavraEscolhida = escolherPalavra();
-    palavraDisplay = Array(palavraEscolhida.length).fill("_");
-    document.getElementById("palavra").innerText = palavraDisplay.join(" ");
-    document.getElementById("tentativas").innerText = tentativasRestantes;
-    document.getElementById("mensagem").innerText = "";
-}
-
+// Função para escolher uma palavra aleatória e garantir que não repita
 function escolherPalavra() {
-    let escolha;
-    do {
-        escolha = palavras[Math.floor(Math.random() * palavras.length)];
-    } while (palavrasUsadas.includes(escolha));
+    const indiceAleatorio = Math.floor(Math.random() * palavras.length);
+    palavraEscolhida = palavras[indiceAleatorio];
 
-    palavrasUsadas.push(escolha);
-    return escolha;
+    // Remove a palavra escolhida da lista para evitar repetições
+    palavras.splice(indiceAleatorio, 1);
+
+    letrasCorretas = Array(palavraEscolhida.length).fill("_");
+    letrasUsadas = [];
 }
 
-function tentarLetra() {
-    let letra = document.getElementById("inputLetra").value.toUpperCase();
+// Exibe a palavra oculta
+function exibirPalavra() {
+    const palavraElement = document.getElementById("palavra");
+    palavraElement.innerHTML = letrasCorretas.join(" ");
+}
 
-    if (letra && !letrasErradas.includes(letra) && !letrasCorretas.includes(letra)) {
-        if (palavraEscolhida.includes(letra)) {
-            letrasCorretas.push(letra);
-            atualizarPalavra(letra);
-        } else {
-            letrasErradas.push(letra);
-            tentativasRestantes--;
-            document.getElementById("tentativas").innerText = tentativasRestantes;
-        }
-
-        document.getElementById("inputLetra").value = "";
-        verificarFimDeJogo();
+// Verifica se a letra está na palavra
+function verificarLetra(letra) {
+    if (letrasUsadas.includes(letra)) {
+        alert("Você já tentou essa letra.");
+        return;
     }
-}
 
-function atualizarPalavra(letra) {
+    letrasUsadas.push(letra);
+
+    let acertou = false;
     for (let i = 0; i < palavraEscolhida.length; i++) {
         if (palavraEscolhida[i] === letra) {
-            palavraDisplay[i] = letra;
+            letrasCorretas[i] = letra;
+            acertou = true;
         }
     }
 
-    document.getElementById("palavra").innerText = palavraDisplay.join(" ");
+    if (!acertou) {
+        tentativas--;
+        atualizarTentativas();
+    }
+
+    exibirPalavra();
+    verificarFimDeJogo();
 }
 
+// Atualiza a quantidade de tentativas restantes
+function atualizarTentativas() {
+    const tentativasElement = document.getElementById("tentativas");
+    tentativasElement.innerHTML = `Tentativas restantes: ${tentativas}`;
+}
+
+// Verifica se o jogo acabou
 function verificarFimDeJogo() {
-    if (palavraDisplay.join("") === palavraEscolhida) {
-        document.getElementById("mensagem").innerText = "Parabéns, você adivinhou a palavra!";
-    } else if (tentativasRestantes <= 0) {
-        document.getElementById("mensagem").innerText = `Você perdeu! A palavra era: ${palavraEscolhida}`;
+    if (letrasCorretas.join("") === palavraEscolhida) {
+        alert("Você venceu! A palavra era: " + palavraEscolhida);
+    } else if (tentativas === 0) {
+        alert("Você perdeu! A palavra era: " + palavraEscolhida);
     }
 }
 
-function chutarPalavra() {
-    let chute = prompt("Chute a palavra!");
-    if (chute.toUpperCase() === palavraEscolhida) {
-        document.getElementById("mensagem").innerText = "Parabéns, você acertou!";
-    } else {
-        document.getElementById("mensagem").innerText = `Você errou! A palavra era: ${palavraEscolhida}`;
-    }
+// Exibe a lista de letras já usadas
+function exibirLetrasUsadas() {
+    const letrasUsadasElement = document.getElementById("letrasUsadas");
+    letrasUsadasElement.innerHTML = `Letras usadas: ${letrasUsadas.join(", ")}`;
 }
 
-let palavrasUsadas = [];
+// Inicia o jogo
+function iniciarJogo() {
+    if (palavras.length === 0) {
+        alert("Não há mais palavras disponíveis para jogar!");
+        return;
+    }
+
+    escolherPalavra();
+    exibirPalavra();
+    atualizarTentativas();
+    exibirLetrasUsadas();
+}
+
+// Lida com o clique da letra
+function jogar(letra) {
+    verificarLetra(letra);
+    exibirLetrasUsadas();
+}
+
+// Adiciona um ouvinte para o botão reiniciar
+document.getElementById("reiniciar").addEventListener("click", iniciarJogo);
+
+// Chama a função de iniciar o jogo
 iniciarJogo();
