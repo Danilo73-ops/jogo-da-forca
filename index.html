@@ -10,11 +10,19 @@
     <h1>Jogo da Forca</h1>
     <div id="palavra"></div>
     <div id="tentativas">Tentativas restantes: 6</div>
+
     <div>
         <label for="letra">Digite uma letra:</label>
         <input type="text" id="letra" maxlength="1">
         <button onclick="verificarLetra()">Tentar</button>
     </div>
+
+    <div>
+        <label for="palavraChutada">Tente adivinhar a palavra:</label>
+        <input type="text" id="palavraChutada">
+        <button onclick="tentarChutarPalavra()">Chutar Palavra</button>
+    </div>
+
     <div id="mensagem"></div>
     <script src="script.js"></script>
 </body>
