@@ -1,83 +1,72 @@
-// Lista de palavras
-const palavras = [
-    "DESAFIO",
-    "COMPUTADOR",
-    "PROGRAMACAO",
-    "APRENDIZAGEM",
-    "ALGORITMO",
-    "DESENVOLVIMENTO",
-    "SISTEMAS",
-    "TEXTO",
-    "DESIGN",
-    "CODIGO"
-];
+let palavras = ["MELANCIA", "BANANA", "LARANJA", "MANGA"];
+let palavraEscolhida = "";
+let palavraDisplay = [];
+let tentativasRestantes = 6;
+let letrasErradas = [];
+let letrasCorretas = [];
 
-// Lista para armazenar palavras já usadas
-let palavrasUsadas = [];
+function iniciarJogo() {
+    palavraEscolhida = escolherPalavra();
+    palavraDisplay = Array(palavraEscolhida.length).fill("_");
+    document.getElementById("palavra").innerText = palavraDisplay.join(" ");
+    document.getElementById("tentativas").innerText = tentativasRestantes;
+    document.getElementById("mensagem").innerText = "";
+}
 
-// Função para escolher uma palavra aleatória que ainda não foi usada
 function escolherPalavra() {
     let escolha;
     do {
         escolha = palavras[Math.floor(Math.random() * palavras.length)];
-    } while (palavrasUsadas.includes(escolha));  // Verifica se já foi usada
+    } while (palavrasUsadas.includes(escolha));
 
-    palavrasUsadas.push(escolha);  // Adiciona a palavra à lista de usadas
+    palavrasUsadas.push(escolha);
     return escolha;
 }
 
-let palavraEscolhida = escolherPalavra();
-let letrasCorretas = Array(palavraEscolhida.length).fill("_");
-let tentativas = 6;
+function tentarLetra() {
+    let letra = document.getElementById("inputLetra").value.toUpperCase();
 
-// Exibir a palavra na tela
-document.getElementById("palavra").innerHTML = letrasCorretas.join(" ");
-document.getElementById("tentativas").innerHTML = `Tentativas restantes: ${tentativas}`;
-
-// Função para verificar se a letra do usuário está correta
-function verificarLetra() {
-    const letra = document.getElementById("letra").value.toUpperCase(); // Converte para maiúscula
-    if (letra && letra.length === 1) {
-        let acerto = false;
-        for (let i = 0; i < palavraEscolhida.length; i++) {
-            if (palavraEscolhida[i] === letra) {
-                letrasCorretas[i] = letra;
-                acerto = true;
-            }
+    if (letra && !letrasErradas.includes(letra) && !letrasCorretas.includes(letra)) {
+        if (palavraEscolhida.includes(letra)) {
+            letrasCorretas.push(letra);
+            atualizarPalavra(letra);
+        } else {
+            letrasErradas.push(letra);
+            tentativasRestantes--;
+            document.getElementById("tentativas").innerText = tentativasRestantes;
         }
 
-        if (!acerto) {
-            tentativas--;
-        }
-
-        // Atualiza a tela
-        document.getElementById("palavra").innerHTML = letrasCorretas.join(" ");
-        document.getElementById("tentativas").innerHTML = `Tentativas restantes: ${tentativas}`;
-
-        // Verifica se o jogo acabou
-        if (letrasCorretas.join("") === palavraEscolhida) {
-            document.getElementById("mensagem").innerHTML = "Você venceu!";
-        } else if (tentativas === 0) {
-            document.getElementById("mensagem").innerHTML = `Você perdeu! A palavra era ${palavraEscolhida}`;
-        }
-
-        // Limpa o campo de input
-        document.getElementById("letra").value = "";
+        document.getElementById("inputLetra").value = "";
+        verificarFimDeJogo();
     }
 }
 
-// Função para tentar adivinhar a palavra completa
-function tentarChutarPalavra() {
-    const chute = document.getElementById("palavraChutada").value.toUpperCase(); // Converte para maiúscula
-    if (chute === palavraEscolhida) {
-        document.getElementById("mensagem").innerHTML = "Você acertou a palavra! Parabéns!";
-        letrasCorretas = palavraEscolhida.split("");  // Revela a palavra inteira
-        document.getElementById("palavra").innerHTML = letrasCorretas.join(" ");
+function atualizarPalavra(letra) {
+    for (let i = 0; i < palavraEscolhida.length; i++) {
+        if (palavraEscolhida[i] === letra) {
+            palavraDisplay[i] = letra;
+        }
+    }
+
+    document.getElementById("palavra").innerText = palavraDisplay.join(" ");
+}
+
+function verificarFimDeJogo() {
+    if (palavraDisplay.join("") === palavraEscolhida) {
+        document.getElementById("mensagem").innerText = "Parabéns, você adivinhou a palavra!";
+    } else if (tentativasRestantes <= 0) {
+        document.getElementById("mensagem").innerText = `Você perdeu! A palavra era: ${palavraEscolhida}`;
+    }
+}
+
+function chutarPalavra() {
+    let chute = prompt("Chute a palavra!");
+    if (chute.toUpperCase() === palavraEscolhida) {
+        document.getElementById("mensagem").innerText = "Parabéns, você acertou!";
     } else {
-        tentativas--;
-        document.getElementById("tentativas").innerHTML = `Tentativas restantes: ${tentativas}`;
-        if (tentativas === 0) {
-            document.getElementById("mensagem").innerHTML = `Você perdeu! A palavra era ${palavraEscolhida}`;
-        }
+        document.getElementById("mensagem").innerText = `Você errou! A palavra era: ${palavraEscolhida}`;
     }
 }
+
+let palavrasUsadas = [];
+iniciarJogo();
