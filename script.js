@@ -1,96 +1,87 @@
-// Lista de palavras
-const palavras = ["HTML", "JAVASCRIPT", "GITHUB", "REACT", "NODE", "CSS", "PYTHON"];
+let palavras = ['javascript', 'forca', 'programacao', 'desenvolvimento', 'computador'];
 let palavraEscolhida;
-let letrasUsadas = [];
-let letrasCorretas = [];
 let tentativas = 6;
+let letrasUsadas = [];
+let palavraAtual = [];
+let jogoAtivo = true;
 
-// Função para escolher uma palavra aleatória e garantir que não repita
 function escolherPalavra() {
-    const indiceAleatorio = Math.floor(Math.random() * palavras.length);
-    palavraEscolhida = palavras[indiceAleatorio];
-
-    // Remove a palavra escolhida da lista para evitar repetições
-    palavras.splice(indiceAleatorio, 1);
-
-    letrasCorretas = Array(palavraEscolhida.length).fill("_");
-    letrasUsadas = [];
+    // Escolher palavra aleatória
+    let indice = Math.floor(Math.random() * palavras.length);
+    palavraEscolhida = palavras[indice];
+    palavras.splice(indice, 1); // Remove a palavra escolhida da lista para não repetir
+    palavraAtual = Array(palavraEscolhida.length).fill('_');
+    document.getElementById('palavra').innerText = palavraAtual.join(' ');
+    document.getElementById('tentativas').innerText = `Tentativas restantes: ${tentativas}`;
+    document.getElementById('letrasUsadas').innerText = `Letras usadas: ${letrasUsadas.join(', ')}`;
 }
 
-// Exibe a palavra oculta
-function exibirPalavra() {
-    const palavraElement = document.getElementById("palavra");
-    palavraElement.innerHTML = letrasCorretas.join(" ");
+function exibirTeclado() {
+    let teclado = document.getElementById('teclado');
+    let letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    teclado.innerHTML = '';
+
+    letras.forEach(letra => {
+        let botao = document.createElement('button');
+        botao.innerText = letra;
+        botao.onclick = function() {
+            tentarLetra(letra);
+        };
+        teclado.appendChild(botao);
+    });
 }
 
-// Verifica se a letra está na palavra
-function verificarLetra(letra) {
-    if (letrasUsadas.includes(letra)) {
-        alert("Você já tentou essa letra.");
-        return;
-    }
+function tentarLetra(letra) {
+    if (!jogoAtivo || letrasUsadas.includes(letra)) return;
 
     letrasUsadas.push(letra);
+    document.getElementById('letrasUsadas').innerText = `Letras usadas: ${letrasUsadas.join(', ')}`;
 
-    let acertou = false;
-    for (let i = 0; i < palavraEscolhida.length; i++) {
-        if (palavraEscolhida[i] === letra) {
-            letrasCorretas[i] = letra;
-            acertou = true;
+    if (palavraEscolhida.includes(letra)) {
+        for (let i = 0; i < palavraEscolhida.length; i++) {
+            if (palavraEscolhida[i] === letra) {
+                palavraAtual[i] = letra;
+            }
         }
-    }
-
-    if (!acertou) {
+        document.getElementById('palavra').innerText = palavraAtual.join(' ');
+    } else {
         tentativas--;
-        atualizarTentativas();
+        document.getElementById('tentativas').innerText = `Tentativas restantes: ${tentativas}`;
     }
 
-    exibirPalavra();
-    verificarFimDeJogo();
-}
-
-// Atualiza a quantidade de tentativas restantes
-function atualizarTentativas() {
-    const tentativasElement = document.getElementById("tentativas");
-    tentativasElement.innerHTML = `Tentativas restantes: ${tentativas}`;
-}
-
-// Verifica se o jogo acabou
-function verificarFimDeJogo() {
-    if (letrasCorretas.join("") === palavraEscolhida) {
-        alert("Você venceu! A palavra era: " + palavraEscolhida);
-    } else if (tentativas === 0) {
-        alert("Você perdeu! A palavra era: " + palavraEscolhida);
+    if (tentativas === 0) {
+        alert('Você perdeu!');
+        jogoAtivo = false;
+    } else if (!palavraAtual.includes('_')) {
+        alert('Você venceu!');
+        jogoAtivo = false;
     }
 }
 
-// Exibe a lista de letras já usadas
-function exibirLetrasUsadas() {
-    const letrasUsadasElement = document.getElementById("letrasUsadas");
-    letrasUsadasElement.innerHTML = `Letras usadas: ${letrasUsadas.join(", ")}`;
+function chutarPalavra() {
+    let chute = document.getElementById('chutarPalavra').value.toLowerCase();
+    if (chute === palavraEscolhida) {
+        document.getElementById('palavra').innerText = palavraEscolhida.toUpperCase();
+        alert('Você venceu!');
+        jogoAtivo = false;
+    } else {
+        tentativas--;
+        document.getElementById('tentativas').innerText = `Tentativas restantes: ${tentativas}`;
+    }
+    document.getElementById('chutarPalavra').value = '';
 }
 
-// Inicia o jogo
-function iniciarJogo() {
-    if (palavras.length === 0) {
-        alert("Não há mais palavras disponíveis para jogar!");
-        return;
-    }
-
+function reiniciarJogo() {
+    tentativas = 6;
+    letrasUsadas = [];
+    palavraAtual = [];
+    jogoAtivo = true;
     escolherPalavra();
-    exibirPalavra();
-    atualizarTentativas();
-    exibirLetrasUsadas();
+    exibirTeclado();
 }
 
-// Lida com o clique da letra
-function jogar(letra) {
-    verificarLetra(letra);
-    exibirLetrasUsadas();
-}
+document.getElementById('reiniciar').onclick = reiniciarJogo;
+document.getElementById('chutarBtn').onclick = chutarPalavra;
 
-// Adiciona um ouvinte para o botão reiniciar
-document.getElementById("reiniciar").addEventListener("click", iniciarJogo);
-
-// Chama a função de iniciar o jogo
-iniciarJogo();
+escolherPalavra();
+exibirTeclado();
